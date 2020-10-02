@@ -1,0 +1,25 @@
+<section class="panel is-primary">
+    <div class="panel-heading"><h1>Login</h1></div>
+    <form class="panel-content p-5" (submit)="login()" [formGroup]="form">
+        <div class="field">
+            <label class="label">Username</label>
+            <div class="control">
+                <input class="input" type="text" formControlName="username" placeholder="Username">
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Password</label>
+            <div class="control">
+                <input class="input" type="text" formControlName="password" placeholder="Password">
+            </div>
+        </div>
+        <div class="message is-danger" *ngIf="authenticationFailure">
+            <div class="message-body">
+                Username/password incorrect
+            </div>
+        </div>
+        <div class="control">
+            <button type="submit" class="button is-primary" [disabled]="form.invalid">Login</button>
+        </div>
+    </form>
+</section>
