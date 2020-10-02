@@ -1,0 +1,76 @@
+<article class="panel is-primary" *ngIf="cityName$ | async as cityName">
+    <div class="panel-heading"><h1 aria-label="city name">{{cityName}}</h1></div>
+    <div class="panel-block">
+        <app-l-map *ngIf="cityCoords$ | async as coords"
+                   [zoom]="13"
+                   [lat]="coords.latitude"
+                   [long]="coords.longitude">
+        </app-l-map>
+    </div>
+    <div class="panel-block">
+        <div class="columns">
+            <div class="column">
+                <div class="field has-addons" id="degree-controls">
+                    <p class="control">
+                        <a class="button" [class.is-info]="degree == 'C'" (click)="updateTemperatureUnite('C')">C°</a>
+                    </p>
+                    <p class="control">
+                        <a class="button" [class.is-info]="degree == 'F'" (click)="updateTemperatureUnite('F')">F°</a>
+                    </p>
+                </div>
+            </div>
+            <div class="column">
+                <div class="field has-addons" id="mode-controls">
+                    <p class="control">
+                        <a class="button" [class.is-info]="mode == 'daily'" (click)="updateMode('daily')">Daily</a>
+                    </p>
+                    <p class="control">
+                        <a class="button" [class.is-info]="mode == 'hourly'" (click)="updateMode('hourly')">Hourly</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-block" *ngIf="mode === 'daily' && (dailyWeather$ | async) as dailyWeather">
+        <table id="daily-weather" class="table is-bordered">
+            <tr>
+                <th>Date</th>
+                <th>Weather</th>
+                <th>Max</th>
+                <th>Min</th>
+            </tr>
+            <tr *ngFor="let weather of dailyWeather">
+                <td>{{weather.day}}</td>
+                <td><img [src]="'https://ssl.gstatic.com/onebox/weather/48/'+weather.weather+'.png'"
+                         [alt]="weather.weather"></td>
+                <td>{{weather.temperatureMax | degree: degree}}</td>
+                <td>{{weather.temperatureMin | degree: degree}}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="panel-block" *ngIf="mode === 'hourly' && (hourlyWeather$ | async) as hourlyWeather">
+        <table id="hourly-weather" class="table is-bordered">
+            <tr>
+                <th>Time</th>
+                <th>Weather</th>
+                <th>Temperature</th>
+            </tr>
+            <tr *ngFor="let weather of hourlyWeather">
+                <td>{{weather.time}}</td>
+                <td><img [src]="'https://ssl.gstatic.com/onebox/weather/48/'+weather.weather+'.png'"
+                         [alt]="weather.weather"></td>
+                <td>{{weather.temperature | degree: degree}}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="panel-block" *ngIf="loading">
+        <div class="panel-block is-justify-content-center">
+            <div class="loader is-loading is-size-1"></div>
+        </div>
+    </div>
+    <div class="panel-block">
+        <a routerLink="/" class="button is-rounded">
+            Go back home
+        </a>
+    </div>
+</article>

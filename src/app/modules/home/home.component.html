@@ -1,0 +1,9 @@
+<section>
+    <div class="panel is-primary">
+        <div class="panel-heading"><h1>Agences Z</h1></div>
+
+        <a class="panel-block p-4" [routerLink]="['/', city]" *ngFor="let city of cities">
+            <h2 class="subtitle">{{ city }}</h2>
+        </a>
+    </div>
+</section>
