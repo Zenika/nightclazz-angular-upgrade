@@ -1,3 +1,31 @@
+## 12
+
+### `@angular/cli`
+
+❯ Remove deprecated options from 'angular.json' that are no longer present in v12.
+
+❯ Update 'zone.js' to version 0.11.x.
+
+❯ Remove 'emitDecoratorMetadata' TypeScript compiler option.
+
+❯ Lazy loading syntax migration.
+
+❯ Remove deprecated ViewEngine-based i18n build and extract options.
+
+❯ Updates Web Worker consumer usage to use the new syntax supported directly by Webpack 5.
+
+❯ Remove invalid 'skipTests' option in '@schematics/angular:module' Angular schematic options.
+
+❯ Replace the deprecated '--prod' in package.json scripts.
+
+### `@angular/core`
+
+❯ In Angular version 12, the type of ActivatedRouteSnapshot.fragment is nullable.
+
+❯ `XhrFactory` has been moved from `@angular/common/http` to `@angular/common`.
+
+❯ Automatically migrates shadow-piercing selector from `/deep/` to the recommended alternative `::ng-deep`.
+
 ## 11
 
 ### `@angular/cli`
