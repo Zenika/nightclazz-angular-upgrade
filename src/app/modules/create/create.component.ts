@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
 import {CitiesService} from "../../shared/services/cities.service";
 import {Router} from "@angular/router";
 import { GeoPosition } from "../../core/domain/geo-position";
@@ -10,9 +10,9 @@ import { GeoPosition } from "../../core/domain/geo-position";
   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent implements OnInit {
-  public form: FormGroup;
+  public form: UntypedFormGroup;
 
-  constructor(protected fb: FormBuilder, protected citiesService: CitiesService, protected router: Router) {
+  constructor(protected fb: UntypedFormBuilder, protected citiesService: CitiesService, protected router: Router) {
   }
 
   ngOnInit(): void {

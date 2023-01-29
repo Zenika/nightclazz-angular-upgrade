@@ -1,3 +1,28 @@
+## 14
+
+### `@angular/cli`
+
+❯ Remove 'defaultProject' option from workspace configuration.
+
+❯ Remove 'showCircularDependencies' option from browser and server builders.
+
+❯ Replace 'defaultCollection' option in workspace configuration with 'schematicCollections'.
+
+❯ Update Angular packages 'dependencies' and 'devDependencies' version prefix to '^' instead of '~'.
+
+❯ Remove 'package.json' files from library projects secondary entrypoints.
+
+❯ Update TypeScript compilation target to 'ES2020'.
+
+### `@angular/core`
+
+❯ As of Angular version 13, `entryComponents` are no longer necessary.
+
+❯ In Angular version 14, the `pathMatch` property of `Routes` was updated to be a strict union of the two valid options: `'full'|'prefix'`.
+`Routes` and `Route` variables need an explicit type so TypeScript does not infer the property as the looser `string`.
+
+❯ As of Angular version 14, Forms model classes accept a type parameter, and existing usages must be opted out to preserve backwards-compatibility.
+
 ## 13
 
 ### `@angular/cli`
