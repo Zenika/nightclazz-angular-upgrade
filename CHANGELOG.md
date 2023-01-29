@@ -1,3 +1,25 @@
+## 13
+
+### `@angular/cli`
+
+❯ Remove polyfills required only for Internet Explorer which is no longer supported.
+
+❯ Remove no longer valid Angular schematic options from `angular.json`.
+
+❯ Remove deprecated options from 'angular.json' that are no longer present in v13.
+
+❯ Updating '.gitignore' to include '.angular/cache'.
+
+❯ Update library projects to be published in partial mode and removed deprecated options from ng-packagr configuration.
+
+### `@angular/core`
+
+❯ Migrates `[routerLink]=""` in templates to `[routerLink]="[]"` because these links are likely intended to route to the current page with updated fragment/query params.
+
+❯ In Angular version 13, the `teardown` flag in `TestBed` will be enabled by default.
+
+❯ As of Angular version 13, `entryComponents` are no longer necessary.
+
 ## 12
 
 ### `@angular/cli`
