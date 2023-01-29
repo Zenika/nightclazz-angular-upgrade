@@ -8,7 +8,8 @@ describe('IsAuthenticatedGuard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule]
+      imports: [RouterTestingModule],
+      teardown: { destroyAfterEach: false }
     });
     guard = TestBed.inject(IsAuthenticatedGuard);
   });

@@ -12,9 +12,10 @@ describe('CityComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CityComponent, LMapComponent],
-      imports: [HttpClientTestingModule, RouterTestingModule, FormsModule]
-    })
+    declarations: [CityComponent, LMapComponent],
+    imports: [HttpClientTestingModule, RouterTestingModule, FormsModule],
+    teardown: { destroyAfterEach: false }
+})
       .compileComponents();
   });
 

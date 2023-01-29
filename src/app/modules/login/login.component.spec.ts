@@ -12,6 +12,7 @@ describe('LoginComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [LoginComponent],
       imports: [ReactiveFormsModule, RouterTestingModule],
+      teardown: { destroyAfterEach: false }
     })
     .compileComponents();
   });
