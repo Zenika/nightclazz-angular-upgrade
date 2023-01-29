@@ -103,7 +103,6 @@
       }
     }
   },
-  "defaultProject": "grenoble-hands-on",
   "cli": {
     "analytics": false,
     "defaultCollection": "@angular-eslint/schematics"
