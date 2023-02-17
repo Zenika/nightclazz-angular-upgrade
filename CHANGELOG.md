@@ -1,3 +1,23 @@
+## 15
+
+### `@angular/cli`
+
+❯ Remove Browserslist configuration files that matches the Angular CLI default configuration.
+
+❯ Remove exported `@angular/platform-server` `renderModule` method.
+
+❯ Remove no longer needed require calls in Karma builder main file.
+
+❯ Update TypeScript compiler `target` and set `useDefineForClassFields`.
+
+❯ Remove options from 'angular.json' that are no longer supported by the official builders.
+
+### `@angular/core`
+
+❯ In Angular version 15, the deprecated `relativeLinkResolution` config parameter of the Router is removed.
+
+❯ Since Angular v15, the `RouterLink` contains the logic of the `RouterLinkWithHref` directive.
+
 ## 14
 
 ### `@angular/cli`
