@@ -26,8 +26,8 @@ export class CitiesService {
   }
 
 
-  getCityPosition(cityName): GeoPosition {
-    return this.cities.find(c => c.name === cityName).position
+  getCityPosition(cityName: string): GeoPosition | undefined {
+    return this.cities.find(c => c.name === cityName)?.position
   }
 
   addCity(city: City) {

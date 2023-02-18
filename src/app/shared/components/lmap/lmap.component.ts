@@ -11,9 +11,9 @@ export class LMapComponent implements AfterViewInit {
   @Input()
   zoom = 13
   @Input()
-  lat: number
+  lat!: number
   @Input()
-  long: number
+  long!: number
 
   private map: any;
 

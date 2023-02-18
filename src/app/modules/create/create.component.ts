@@ -10,7 +10,7 @@ import { GeoPosition } from "../../core/domain/geo-position";
   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent implements OnInit {
-  public form: UntypedFormGroup;
+  public form!: UntypedFormGroup;
 
   constructor(protected fb: UntypedFormBuilder, protected citiesService: CitiesService, protected router: Router) {
   }

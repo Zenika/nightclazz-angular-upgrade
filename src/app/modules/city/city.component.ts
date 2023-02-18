@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { WeatherService } from "../../shared/services/weather.service";
 import { Observable } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
-import { map, mergeMap, tap } from "rxjs/operators";
+import { filter, map, mergeMap, tap } from 'rxjs/operators'
 import { CitiesService } from "../../shared/services/cities.service";
 import { DailyWeather } from "../../core/domain/daily-weather";
 import { HourlyWeather } from "../../core/domain/hourly-weather";
@@ -17,10 +17,10 @@ import { GeoPosition } from "../../core/domain/geo-position";
 })
 export class CityComponent implements OnInit {
 
-    cityName$: Observable<string>;
-    dailyWeather$: Observable<DailyWeather[]>;
-    hourlyWeather$: Observable<HourlyWeather[]>;
-    cityCoords$: Observable<GeoPosition>;
+    cityName$!: Observable<string>;
+    dailyWeather$!: Observable<DailyWeather[]>;
+    hourlyWeather$!: Observable<HourlyWeather[]>;
+    cityCoords$!: Observable<GeoPosition>;
     degree: UniteDegree = 'C';
     mode: WeatherMode = "daily";
     loading = false
@@ -34,9 +34,11 @@ export class CityComponent implements OnInit {
             map(params => params.cityName)
         )
         this.cityCoords$ = this.cityName$.pipe(
-            map(cityName => this.citiesService.getCityPosition(cityName))
+            map(cityName => this.citiesService.getCityPosition(cityName)),
+            filter((value: GeoPosition | undefined): value is GeoPosition => value !== undefined),
         )
         this.dailyWeather$ = this.cityCoords$.pipe(
+            filter(coords => coords !== undefined),
             tap(() => this.loading = true),
             mergeMap(coords => this.weatherService.getCityNextWeekWeather(coords.longitude, coords.latitude)),
             tap(() => this.loading = false),

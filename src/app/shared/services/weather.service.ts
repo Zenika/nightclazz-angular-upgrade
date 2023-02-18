@@ -14,7 +14,7 @@ export class WeatherService {
     constructor(protected http: HttpClient) {
     }
 
-    getCityNextWeekWeather(long, lat): Observable<DailyWeather[]> {
+    getCityNextWeekWeather(long: number, lat: number): Observable<DailyWeather[]> {
         return this.http.get<DailyWeather7Timer>(
           `http://www.7timer.info/bin/api.pl?lon=${long}&lat=${lat}&product=civillight&output=json`
         ).pipe(

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CitiesService } from "../../shared/services/cities.service";
+import { City } from '../../core/domain/city'
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,7 @@ import { CitiesService } from "../../shared/services/cities.service";
 })
 export class HomeComponent implements OnInit {
 
-  cities = [];
+  cities: string[] = [];
 
   constructor(protected citiesService: CitiesService) { }
 

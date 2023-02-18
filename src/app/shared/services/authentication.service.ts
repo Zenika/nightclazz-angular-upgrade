@@ -7,7 +7,7 @@ type Principal = { role: string; name: string };
     providedIn: 'root'
 })
 export class AuthenticationService {
-    private principal: Principal = this.rehydrateFromLocalStorage();
+    private principal: Principal | null = this.rehydrateFromLocalStorage();
 
     constructor(private router: Router) {
     }
@@ -17,7 +17,7 @@ export class AuthenticationService {
         return principal && JSON.parse(principal)
     }
 
-    getPrincipal(): Principal {
+    getPrincipal(): Principal | null {
         return this.principal
     }
 
