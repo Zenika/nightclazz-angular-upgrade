@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CitiesService } from "../../shared/services/cities.service";
-import { City } from '../../core/domain/city'
 
 @Component({
   selector: 'app-home',
@@ -17,7 +16,4 @@ export class HomeComponent implements OnInit {
     this.cities = this.citiesService.getCities().map(c => c.name);
   }
 
-  login() {
-
-  }
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
+import { CanActivate, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from "../../shared/services/authentication.service";
 
@@ -9,9 +9,7 @@ import { AuthenticationService } from "../../shared/services/authentication.serv
 export class IsAdminGuard implements CanActivate {
   constructor(private authenticationService: AuthenticationService, private router: Router) {
   }
-  canActivate(
-      route: ActivatedRouteSnapshot,
-      state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.authenticationService.getPrincipal()?.role === 'admin') {
       return true
     }

@@ -15,11 +15,7 @@ export class LMapComponent implements AfterViewInit {
   @Input()
   long!: number
 
-  private map: any;
-
-
-  constructor() {
-  }
+  private map!: Map;
 
   ngAfterViewInit(): void {
     this.map = new Map('mapId').setView([this.lat, this.long], this.zoom)
