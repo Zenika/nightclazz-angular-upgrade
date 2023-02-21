@@ -39,6 +39,6 @@ export class AuthenticationService {
     logout() {
         this.principal = null
         localStorage.removeItem("principal")
-        this.router.navigate(["/", "login"])
+        this.router.navigate(["/"], { onSameUrlNavigation: "reload" })
     }
 }
