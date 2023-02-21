@@ -4,8 +4,7 @@
         <app-l-map *ngIf="cityCoords$ | async as coords"
                    [zoom]="13"
                    [lat]="coords.latitude"
-                   [long]="coords.longitude">
-        </app-l-map>
+                   [long]="coords.longitude"/>
     </div>
     <div class="panel-block">
         <div class="columns">
