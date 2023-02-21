@@ -13,11 +13,11 @@ const routes: Routes = [
     },
     {
         path: 'login',
-        loadChildren: () => import("./modules/login/login.module").then(m => m.LoginModule)
+        loadComponent: () => import("./modules/login/login.component").then(m => m.LoginComponent)
     },
     {
         path: 'create',
-        loadChildren: () => import("./modules/create/create.module").then(m => m.CreateModule),
+        loadComponent: () => import("./modules/create/create.component").then(m => m.CreateComponent),
         canActivate: [IsAdminGuard]
     },
     {

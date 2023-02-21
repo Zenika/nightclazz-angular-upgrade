@@ -1,12 +1,18 @@
 import { Component } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from "@angular/forms";
+import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms'
 import { AuthenticationService } from "../../shared/services/authentication.service";
 import { Router } from "@angular/router";
+import { NgIf } from '@angular/common'
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+    styleUrls: ['./login.component.scss'],
+    standalone: true,
+    imports: [
+      NgIf,
+      ReactiveFormsModule
+    ]
 })
 export class LoginComponent {
     form: UntypedFormGroup = this.fb.group({
