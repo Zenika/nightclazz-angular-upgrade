@@ -24,7 +24,7 @@ export class LoginComponent {
     login() {
         const {username, password} = this.form.value
         if (this.authenticationService.authenticate(username, password)) {
-            this.router.navigate(["/"])
+            this.router.navigate(["/"], { onSameUrlNavigation: "reload" })
         } else {
             this.authenticationFailure = true
         }
