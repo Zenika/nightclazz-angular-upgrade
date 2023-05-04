@@ -22,7 +22,7 @@ const routes: Routes = [
         canActivate: [isAdminGuard]
     },
     {
-        path: ':cityName',
+        path: 'city/:cityName',
         component: CityComponent,
         canActivate: [isAuthenticatedGuard]
     },
