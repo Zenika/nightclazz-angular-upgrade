@@ -1,7 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CreateComponent} from './create.component';
-import {ReactiveFormsModule} from "@angular/forms";
 import {RouterTestingModule} from "@angular/router/testing";
 
 describe('CreateComponent', () => {
@@ -10,8 +9,8 @@ describe('CreateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [CreateComponent],
-    imports: [RouterTestingModule, ReactiveFormsModule],
+    declarations: [],
+    imports: [RouterTestingModule, CreateComponent],
     teardown: { destroyAfterEach: false }
 })
       .compileComponents();

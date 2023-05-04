@@ -1,13 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 
-import { HomeGuard } from './home.guard';
+import { homeGuard } from './home.guard';
+import {CanMatchFn} from "@angular/router";
 
 describe('HomeGuard', () => {
-  let guard: HomeGuard;
+  let guard: CanMatchFn;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    guard = TestBed.inject(HomeGuard);
+    guard = TestBed.runInInjectionContext(() => homeGuard);
   });
 
   it('should be created', () => {
