@@ -14,7 +14,7 @@ import { NgIf } from '@angular/common'
       ReactiveFormsModule
     ]
 })
-export class LoginComponent {
+export default class LoginComponent {
     form: UntypedFormGroup = this.fb.group({
         username: ['', [Validators.required]],
         password: ['', [Validators.required]]
