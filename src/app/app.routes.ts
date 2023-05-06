@@ -1,11 +1,10 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { HomeComponent } from "./modules/home/home.component";
 import { CityComponent } from "./modules/city/city.component";
 import { IsAuthenticatedGuard } from "./core/guard/is-authenticated.guard";
 import { IsAdminGuard } from "./core/guard/is-admin.guard";
 
-const routes: Routes = [
+export const routes: Routes = [
     {
         path: '',
         component: HomeComponent,
@@ -13,11 +12,11 @@ const routes: Routes = [
     },
     {
         path: 'login',
-        loadChildren: () => import("./modules/login/login.module").then(m => m.LoginModule)
+        loadComponent: () => import("./modules/login/login.component").then(c => c.LoginComponent)
     },
     {
         path: 'create',
-        loadChildren: () => import("./modules/create/create.module").then(m => m.CreateModule),
+        loadComponent: () => import("./modules/create/create.component").then(c => c.CreateComponent),
         canActivate: [IsAdminGuard]
     },
     {
@@ -26,10 +25,3 @@ const routes: Routes = [
         canActivate: [IsAuthenticatedGuard]
     },
 ];
-
-@NgModule({
-    imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
-    exports: [RouterModule]
-})
-export class AppRoutingModule {
-}

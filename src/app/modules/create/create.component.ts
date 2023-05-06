@@ -1,13 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
+import {ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
 import {CitiesService} from "../../shared/services/cities.service";
 import {Router} from "@angular/router";
 import { GeoPosition } from "../../core/domain/geo-position";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss']
+  styleUrls: ['./create.component.scss'],
+  standalone: true,
+  imports: [ReactiveFormsModule, NgIf]
 })
 export class CreateComponent implements OnInit {
   public form: UntypedFormGroup;
