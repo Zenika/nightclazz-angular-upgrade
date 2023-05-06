@@ -9,8 +9,7 @@ describe('NavbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [NavbarComponent],
-    imports: [RouterTestingModule],
+    imports: [RouterTestingModule, NavbarComponent],
     teardown: { destroyAfterEach: false }
 })
       .compileComponents();

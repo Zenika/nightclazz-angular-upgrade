@@ -9,7 +9,6 @@ describe('CreateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [],
     imports: [RouterTestingModule, CreateComponent],
     teardown: { destroyAfterEach: false }
 })
