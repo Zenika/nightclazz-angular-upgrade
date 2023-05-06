@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms'
 import {CitiesService} from "../../shared/services/cities.service";
 import {Router} from "@angular/router";
 import { GeoPosition } from "../../core/domain/geo-position";
+import {NgIf} from "@angular/common";
 
 interface CreateForm {
   name: FormControl<string>
@@ -13,7 +14,9 @@ interface CreateForm {
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss']
+  styleUrls: ['./create.component.scss'],
+  standalone: true,
+  imports: [ReactiveFormsModule, NgIf]
 })
 export class CreateComponent implements OnInit {
   public form!: FormGroup<CreateForm>;
