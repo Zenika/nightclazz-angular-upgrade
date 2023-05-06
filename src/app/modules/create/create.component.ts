@@ -21,7 +21,7 @@ interface CreateForm {
     ReactiveFormsModule
   ]
 })
-export class CreateComponent implements OnInit {
+export default class CreateComponent implements OnInit {
   public form!: FormGroup<CreateForm>;
 
   constructor(protected fb: FormBuilder, protected citiesService: CitiesService, protected router: Router) {
