@@ -10,6 +10,7 @@ import { HomeComponent } from './modules/home/home.component';
 import { LMapComponent } from './shared/components/lmap/lmap.component';
 import { HttpClientModule } from "@angular/common/http";
 import { DegreePipe } from './shared/pipes/degree.pipe';
+import { NgOptimizedImage } from '@angular/common'
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { DegreePipe } from './shared/pipes/degree.pipe';
     imports: [
         BrowserModule,
         HttpClientModule,
-        AppRoutingModule
+        AppRoutingModule,
+        NgOptimizedImage
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -38,7 +38,7 @@
                 <th>Max</th>
                 <th>Min</th>
             </tr>
-            <tr *ngFor="let weather of dailyWeather">
+            <tr *ngFor="let weather of (dailyWeather || [])">
                 <td>{{weather.day}}</td>
                 <td><img [src]="'https://ssl.gstatic.com/onebox/weather/48/'+weather.weather+'.png'"
                          [alt]="weather.weather"></td>
@@ -54,10 +54,10 @@
                 <th>Weather</th>
                 <th>Temperature</th>
             </tr>
-            <tr *ngFor="let weather of hourlyWeather">
+            <tr *ngFor="let weather of (hourlyWeather || [])">
                 <td>{{weather.time}}</td>
-                <td><img [src]="'https://ssl.gstatic.com/onebox/weather/48/'+weather.weather+'.png'"
-                         [alt]="weather.weather"></td>
+                <td><img [ngSrc]="'https://ssl.gstatic.com/onebox/weather/48/'+weather.weather+'.png'"
+                         [alt]="weather.weather" fill></td>
                 <td>{{weather.temperature | degree: degree}}</td>
             </tr>
         </table>
