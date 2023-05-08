@@ -11,14 +11,14 @@ import { WeatherMode } from "../../core/domain/weather-mode";
 import { GeoPosition } from "../../core/domain/geo-position";
 import { DegreePipe } from '../../shared/pipes/degree.pipe';
 import { LMapComponent } from '../../shared/components/lmap/lmap.component';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import {NgIf, NgFor, AsyncPipe, NgOptimizedImage} from '@angular/common';
 
 @Component({
     selector: 'app-city',
     templateUrl: './city.component.html',
     styleUrls: ['./city.component.scss'],
     standalone: true,
-    imports: [NgIf, LMapComponent, NgFor, RouterLink, AsyncPipe, DegreePipe]
+  imports: [NgIf, LMapComponent, NgFor, RouterLink, AsyncPipe, DegreePipe, NgOptimizedImage]
 })
 export class CityComponent implements OnInit {
 
