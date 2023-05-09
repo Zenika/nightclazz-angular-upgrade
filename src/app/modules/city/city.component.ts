@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core'
 import { WeatherService } from "../../shared/services/weather.service";
-import { Observable } from "rxjs";
+import { Observable, of } from 'rxjs'
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { filter, map, mergeMap, tap } from 'rxjs/operators'
 import { CitiesService } from "../../shared/services/cities.service";
@@ -22,7 +22,7 @@ import { NgIf, NgFor, NgOptimizedImage, AsyncPipe } from '@angular/common';
 })
 export class CityComponent implements OnInit {
 
-    cityName$!: Observable<string>;
+    @Input() cityName!: string
     dailyWeather$!: Observable<DailyWeather[]>;
     hourlyWeather$!: Observable<HourlyWeather[]>;
     cityCoords$!: Observable<GeoPosition>;
@@ -30,15 +30,12 @@ export class CityComponent implements OnInit {
     mode: WeatherMode = "daily";
     loading = false
 
-    constructor(protected weatherService: WeatherService, protected citiesService: CitiesService, protected route: ActivatedRoute) {
+    constructor(protected weatherService: WeatherService, protected citiesService: CitiesService) {
     }
 
 
     ngOnInit(): void {
-        this.cityName$ = this.route.params.pipe(
-            map(params => params.cityName)
-        )
-        this.cityCoords$ = this.cityName$.pipe(
+        this.cityCoords$ = of(this.cityName).pipe(
             map(cityName => this.citiesService.getCityPosition(cityName)),
             filter((value: GeoPosition | undefined): value is GeoPosition => value !== undefined),
         )
