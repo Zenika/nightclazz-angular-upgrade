@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core'
 import { WeatherService } from "../../shared/services/weather.service";
-import { Observable } from "rxjs";
+import { Observable, Subscription } from 'rxjs'
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { filter, map, mergeMap, tap } from 'rxjs/operators'
 import { CitiesService } from "../../shared/services/cities.service";
@@ -12,6 +12,7 @@ import { GeoPosition } from "../../core/domain/geo-position";
 import { DegreePipe } from '../../shared/pipes/degree.pipe';
 import { LMapComponent } from '../../shared/components/lmap/lmap.component';
 import { NgIf, NgFor, NgOptimizedImage, AsyncPipe } from '@angular/common';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
 @Component({
     selector: 'app-city',
@@ -23,12 +24,13 @@ import { NgIf, NgFor, NgOptimizedImage, AsyncPipe } from '@angular/common';
 export class CityComponent implements OnInit {
 
     cityName$!: Observable<string>;
-    dailyWeather$!: Observable<DailyWeather[]>;
+    dailyWeather!: DailyWeather[];
     hourlyWeather$!: Observable<HourlyWeather[]>;
     cityCoords$!: Observable<GeoPosition>;
     degree: UniteDegree = 'C';
     mode: WeatherMode = "daily";
     loading = false
+    private destroyRef = inject(DestroyRef)
 
     constructor(protected weatherService: WeatherService, protected citiesService: CitiesService, protected route: ActivatedRoute) {
     }
@@ -42,12 +44,15 @@ export class CityComponent implements OnInit {
             map(cityName => this.citiesService.getCityPosition(cityName)),
             filter((value: GeoPosition | undefined): value is GeoPosition => value !== undefined),
         )
-        this.dailyWeather$ = this.cityCoords$.pipe(
+        this.cityCoords$.pipe(
             filter(coords => coords !== undefined),
             tap(() => this.loading = true),
             mergeMap(coords => this.weatherService.getCityNextWeekWeather(coords.longitude, coords.latitude)),
             tap(() => this.loading = false),
-        )
+            takeUntilDestroyed(this.destroyRef)
+        ).subscribe({
+          next: (dailyWeather) => this.dailyWeather = dailyWeather,
+        })
         this.hourlyWeather$ = this.cityCoords$.pipe(
             tap(() => this.loading = true),
             mergeMap(coords => this.weatherService.getCityDetailedWeather(coords.longitude, coords.latitude)),

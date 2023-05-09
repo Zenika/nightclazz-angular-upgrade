@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-    <div class="panel-block" *ngIf="mode === 'daily' && (dailyWeather$ | async) as dailyWeather">
+    <div class="panel-block" *ngIf="mode === 'daily' && dailyWeather">
         <table id="daily-weather" class="table is-bordered">
             <tr>
                 <th>Date</th>
