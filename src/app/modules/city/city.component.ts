@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WeatherService } from "../../shared/services/weather.service";
 import { Observable } from "rxjs";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, RouterLink } from "@angular/router";
 import { filter, map, mergeMap, tap } from 'rxjs/operators'
 import { CitiesService } from "../../shared/services/cities.service";
 import { DailyWeather } from "../../core/domain/daily-weather";
@@ -9,11 +9,16 @@ import { HourlyWeather } from "../../core/domain/hourly-weather";
 import { UniteDegree } from "../../core/domain/unite-degree";
 import { WeatherMode } from "../../core/domain/weather-mode";
 import { GeoPosition } from "../../core/domain/geo-position";
+import { DegreePipe } from '../../shared/pipes/degree.pipe';
+import { LMapComponent } from '../../shared/components/lmap/lmap.component';
+import { NgIf, NgFor, NgOptimizedImage, AsyncPipe } from '@angular/common';
 
 @Component({
     selector: 'app-city',
     templateUrl: './city.component.html',
-    styleUrls: ['./city.component.scss']
+    styleUrls: ['./city.component.scss'],
+    standalone: true,
+    imports: [NgIf, LMapComponent, NgFor, NgOptimizedImage, RouterLink, AsyncPipe, DegreePipe]
 })
 export class CityComponent implements OnInit {
 
