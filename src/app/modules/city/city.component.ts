@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, computed, OnInit, signal, Signal, WritableSignal} from '@angular/core';
 import { WeatherService } from "../../shared/services/weather.service";
-import { Observable } from "rxjs";
 import { ActivatedRoute, RouterLink } from "@angular/router";
-import { filter, map, mergeMap, tap } from 'rxjs/operators'
 import { CitiesService } from "../../shared/services/cities.service";
 import { DailyWeather } from "../../core/domain/daily-weather";
 import { HourlyWeather } from "../../core/domain/hourly-weather";
@@ -22,41 +20,47 @@ import {NgIf, NgFor, AsyncPipe, NgOptimizedImage} from '@angular/common';
 })
 export class CityComponent implements OnInit {
 
-    cityName$!: Observable<string>;
-    dailyWeather$!: Observable<DailyWeather[]>;
-    hourlyWeather$!: Observable<HourlyWeather[]>;
-    cityCoords$!: Observable<GeoPosition>;
+    cityName!: WritableSignal<string>;
+    dailyWeather: WritableSignal<DailyWeather[]> = signal([]);
+    hourlyWeather: WritableSignal<HourlyWeather[]> = signal([]);
+    cityCoords!: Signal<GeoPosition>;
     degree: UniteDegree = 'C';
     mode: WeatherMode = "daily";
     loading = false
 
-    constructor(protected weatherService: WeatherService, protected citiesService: CitiesService, protected route: ActivatedRoute) {
+    constructor(
+      protected weatherService: WeatherService,
+      protected citiesService: CitiesService,
+      protected route: ActivatedRoute
+    ) {
     }
 
 
     ngOnInit(): void {
-        this.cityName$ = this.route.params.pipe(
-            map(params => params.cityName)
-        )
-        this.cityCoords$ = this.cityName$.pipe(
-            map(cityName => this.citiesService.getCityPosition(cityName)),
-            filter((value: GeoPosition | undefined): value is GeoPosition => value !== undefined),
-        )
-        this.dailyWeather$ = this.cityCoords$.pipe(
-            filter(coords => coords !== undefined),
-            tap(() => this.loading = true),
-            mergeMap(coords => this.weatherService.getCityNextWeekWeather(coords.longitude, coords.latitude)),
-            tap(() => this.loading = false),
-        )
-        this.hourlyWeather$ = this.cityCoords$.pipe(
-            tap(() => this.loading = true),
-            mergeMap(coords => this.weatherService.getCityDetailedWeather(coords.longitude, coords.latitude)),
-            tap(() => this.loading = false),
-        )
+      this.cityName = signal(this.route.snapshot.params.cityName);
+      this.cityCoords = computed(() => this.citiesService.getCityPosition(this.cityName()) ?? {} as GeoPosition);
+
+      this.updateMode('daily');
     }
 
     updateMode(mode: WeatherMode) {
-        this.mode = mode
+      this.mode = mode
+      this.loading = true;
+
+      if (mode === 'daily') {
+        this.weatherService.getCityNextWeekWeather(this.cityCoords().longitude, this.cityCoords().latitude)
+          .subscribe((res: DailyWeather[])=> {
+            this.dailyWeather.set(res);
+            this.loading = false;
+          })
+
+      } else if (mode === 'hourly') {
+        this.weatherService.getCityDetailedWeather(this.cityCoords().longitude, this.cityCoords().latitude)
+          .subscribe((res: HourlyWeather[])=> {
+            this.hourlyWeather.set(res);
+            this.loading = false;
+          })
+      }
     }
 
     updateTemperatureUnite(degree: UniteDegree) {
