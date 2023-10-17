@@ -56,7 +56,7 @@
             </tr>
             <tr *ngFor="let weather of (hourlyWeather || [])">
                 <td>{{weather.time}}</td>
-                <td><img [ngSrc]="'https://ssl.gstatic.com/onebox/weather/48/'+weather.weather+'.png'"
+                <td><img [src]="'https://ssl.gstatic.com/onebox/weather/48/'+weather.weather+'.png'"
                          [alt]="weather.weather" fill></td>
                 <td>{{weather.temperature | degree: degree}}</td>
             </tr>
