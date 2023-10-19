@@ -1,6 +1,6 @@
-import {Component, computed, OnInit, signal, Signal, WritableSignal} from '@angular/core';
+import {Component, computed, Input, OnInit, signal, Signal, WritableSignal} from '@angular/core';
 import { WeatherService } from "../../shared/services/weather.service";
-import { ActivatedRoute, RouterLink } from "@angular/router";
+import { RouterLink } from "@angular/router";
 import { CitiesService } from "../../shared/services/cities.service";
 import { DailyWeather } from "../../core/domain/daily-weather";
 import { HourlyWeather } from "../../core/domain/hourly-weather";
@@ -19,8 +19,9 @@ import {NgIf, NgFor, AsyncPipe, NgOptimizedImage} from '@angular/common';
   imports: [NgIf, LMapComponent, NgFor, RouterLink, AsyncPipe, DegreePipe, NgOptimizedImage]
 })
 export class CityComponent implements OnInit {
+    //Router Input
+    @Input() cityName!: string;
 
-    cityName!: WritableSignal<string>;
     dailyWeather: WritableSignal<DailyWeather[]> = signal([]);
     hourlyWeather: WritableSignal<HourlyWeather[]> = signal([]);
     cityCoords!: Signal<GeoPosition>;
@@ -31,14 +32,12 @@ export class CityComponent implements OnInit {
     constructor(
       protected weatherService: WeatherService,
       protected citiesService: CitiesService,
-      protected route: ActivatedRoute
     ) {
     }
 
 
     ngOnInit(): void {
-      this.cityName = signal(this.route.snapshot.params.cityName);
-      this.cityCoords = computed(() => this.citiesService.getCityPosition(this.cityName()) ?? {} as GeoPosition);
+      this.cityCoords = computed(() => this.citiesService.getCityPosition(this.cityName) ?? {} as GeoPosition);
 
       this.updateMode('daily');
     }
