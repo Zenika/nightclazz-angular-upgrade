@@ -1,10 +1,21 @@
 <article class="panel is-primary">
   <div class="panel-heading"><h1 aria-label="city name">{{cityName}}</h1></div>
     <div class="panel-block">
+      @defer {
+
         <app-l-map
                    [zoom]="13"
                    [lat]="cityCoords().latitude"
                    [long]="cityCoords().longitude"/>
+
+
+      } @loading(minimum 1s) {
+        <div class="panel-block">
+          <div class="panel-block is-justify-content-center">
+            <div class="loader is-loading is-size-1"></div>
+          </div>
+        </div>
+      }
     </div>
     <div class="panel-block">
         <div class="columns">
@@ -30,46 +41,55 @@
             </div>
         </div>
     </div>
-    <div class="panel-block" *ngIf="mode === 'daily'">
-        <table id="daily-weather" class="table is-bordered">
-            <tr>
-                <th>Date</th>
-                <th>Weather</th>
-                <th>Max</th>
-                <th>Min</th>
-            </tr>
-            <tr *ngFor="let weather of dailyWeather()">
-                <td>{{weather.day}}</td>
-                <td><img [src]="'https://ssl.gstatic.com/onebox/weather/48/'+weather.weather+'.png'"
-                         [alt]="weather.weather"></td>
-                <td>{{weather.temperatureMax | degree: degree}}</td>
-                <td>{{weather.temperatureMin | degree: degree}}</td>
-            </tr>
-        </table>
-    </div>
-    <div class="panel-block" *ngIf="mode === 'hourly'">
-        <table id="hourly-weather" class="table is-bordered">
-            <tr>
-                <th>Time</th>
-                <th>Weather</th>
-                <th>Temperature</th>
-            </tr>
-            <tr *ngFor="let weather of hourlyWeather()">
-                <td>{{weather.time}}</td>
-                <td><img [src]="'https://ssl.gstatic.com/onebox/weather/48/'+weather.weather+'.png'"
-                         [alt]="weather.weather" fill></td>
-                <td>{{weather.temperature | degree: degree}}</td>
-            </tr>
-        </table>
-    </div>
-    <div class="panel-block" *ngIf="loading">
-        <div class="panel-block is-justify-content-center">
-            <div class="loader is-loading is-size-1"></div>
-        </div>
-    </div>
+  @if (loading) {
     <div class="panel-block">
-        <a routerLink="/" class="button is-rounded">
-            Go back home
-        </a>
+      <div class="panel-block is-justify-content-center">
+          <div class="loader is-loading is-size-1"></div>
+      </div>
     </div>
+  } @else if (mode === 'daily') {
+    <div class="panel-block" >
+      <table id="daily-weather" class="table is-bordered">
+          <tr>
+              <th>Date</th>
+              <th>Weather</th>
+              <th>Max</th>
+              <th>Min</th>
+          </tr>
+        @for(weather of dailyWeather(); track weather.day) {
+          <tr>
+            <td>{{weather.day}}</td>
+            <td><img [src]="'https://ssl.gstatic.com/onebox/weather/48/'+weather.weather+'.png'"
+                     [alt]="weather.weather"></td>
+            <td>{{weather.temperatureMax | degree: degree}}</td>
+            <td>{{weather.temperatureMin | degree: degree}}</td>
+          </tr>
+        }
+      </table>
+    </div>
+
+  } @else if (mode === 'hourly') {
+    <div class="panel-block">
+      <table id="hourly-weather" class="table is-bordered">
+        <tr>
+          <th>Time</th>
+          <th>Weather</th>
+          <th>Temperature</th>
+        </tr>
+        @for(weather of hourlyWeather(); track weather.time) {
+          <tr>
+            <td>{{weather.time}}</td>
+            <td><img [src]="'https://ssl.gstatic.com/onebox/weather/48/'+weather.weather+'.png'"
+                     [alt]="weather.weather" fill></td>
+            <td>{{weather.temperature | degree: degree}}</td>
+          </tr>
+        }
+      </table>
+    </div>
+  }
+  <div class="panel-block">
+      <a routerLink="/" class="button is-rounded">
+          Go back home
+      </a>
+  </div>
 </article>
