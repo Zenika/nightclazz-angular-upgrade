@@ -12,20 +12,20 @@
             <div class="column">
                 <div class="field has-addons" id="degree-controls">
                     <p class="control">
-                        <a class="button" [class.is-info]="degree == 'C'" (click)="updateTemperatureUnite('C')">C°</a>
+                        <a class="button" [class.is-info]="degree === 'C'" (click)="updateTemperatureUnite('C')">C°</a>
                     </p>
                     <p class="control">
-                        <a class="button" [class.is-info]="degree == 'F'" (click)="updateTemperatureUnite('F')">F°</a>
+                        <a class="button" [class.is-info]="degree === 'F'" (click)="updateTemperatureUnite('F')">F°</a>
                     </p>
                 </div>
             </div>
             <div class="column">
                 <div class="field has-addons" id="mode-controls">
                     <p class="control">
-                        <a class="button" [class.is-info]="mode == 'daily'" (click)="updateMode('daily')">Daily</a>
+                        <a class="button" [class.is-info]="mode === 'daily'" (click)="updateMode('daily')">Daily</a>
                     </p>
                     <p class="control">
-                        <a class="button" [class.is-info]="mode == 'hourly'" (click)="updateMode('hourly')">Hourly</a>
+                        <a class="button" [class.is-info]="mode === 'hourly'" (click)="updateMode('hourly')">Hourly</a>
                     </p>
                 </div>
             </div>
