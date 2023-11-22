@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, inject, Injector, OnInit, Signal} from '@angular/core';
 import { WeatherService } from "../../shared/services/weather.service";
 import { Observable } from "rxjs";
 import { ActivatedRoute, RouterLink } from "@angular/router";
@@ -12,6 +12,7 @@ import { GeoPosition } from "../../core/domain/geo-position";
 import { DegreePipe } from '../../shared/pipes/degree.pipe';
 import { LMapComponent } from '../../shared/components/lmap/lmap.component';
 import {NgIf, NgFor, AsyncPipe, NgOptimizedImage} from '@angular/common';
+import {toSignal} from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'app-city',
@@ -23,12 +24,14 @@ import {NgIf, NgFor, AsyncPipe, NgOptimizedImage} from '@angular/common';
 export class CityComponent implements OnInit {
 
     cityName$!: Observable<string>;
-    dailyWeather$!: Observable<DailyWeather[]>;
-    hourlyWeather$!: Observable<HourlyWeather[]>;
+    dailyWeather!: Signal<DailyWeather[]>;
+    hourlyWeather!: Signal<HourlyWeather[]>;
     cityCoords$!: Observable<GeoPosition>;
     degree: UniteDegree = 'C';
     mode: WeatherMode = "daily";
     loading = false
+
+    private readonly injector = inject(Injector)
 
     constructor(protected weatherService: WeatherService, protected citiesService: CitiesService, protected route: ActivatedRoute) {
     }
@@ -42,17 +45,17 @@ export class CityComponent implements OnInit {
             map(cityName => this.citiesService.getCityPosition(cityName)),
             filter((value: GeoPosition | undefined): value is GeoPosition => value !== undefined),
         )
-        this.dailyWeather$ = this.cityCoords$.pipe(
+        this.dailyWeather = toSignal(this.cityCoords$.pipe(
             filter(coords => coords !== undefined),
             tap(() => this.loading = true),
             mergeMap(coords => this.weatherService.getCityNextWeekWeather(coords.longitude, coords.latitude)),
             tap(() => this.loading = false),
-        )
-        this.hourlyWeather$ = this.cityCoords$.pipe(
+        ), { injector: this.injector, initialValue: [] })
+        this.hourlyWeather = toSignal(this.cityCoords$.pipe(
             tap(() => this.loading = true),
             mergeMap(coords => this.weatherService.getCityDetailedWeather(coords.longitude, coords.latitude)),
             tap(() => this.loading = false),
-        )
+        ), { injector: this.injector, initialValue: [] })
     }
 
     updateMode(mode: WeatherMode) {
