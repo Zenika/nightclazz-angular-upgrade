@@ -1,10 +1,10 @@
-<article class="panel is-primary">
-  <div class="panel-heading"><h1 aria-label="city name">{{cityName}}</h1></div>
+<article class="panel is-primary" *ngIf="cityName$ | async as cityName">
+    <div class="panel-heading"><h1 aria-label="city name">{{cityName}}</h1></div>
     <div class="panel-block">
-        <app-l-map
+        <app-l-map *ngIf="cityCoords$ | async as coords"
                    [zoom]="13"
-                   [lat]="cityCoords().latitude"
-                   [long]="cityCoords().longitude"/>
+                   [lat]="coords.latitude"
+                   [long]="coords.longitude"/>
     </div>
     <div class="panel-block">
         <div class="columns">
@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-    <div class="panel-block" *ngIf="mode === 'daily'">
+    <div class="panel-block" *ngIf="mode === 'daily' && (dailyWeather$ | async) as dailyWeather">
         <table id="daily-weather" class="table is-bordered">
             <tr>
                 <th>Date</th>
@@ -38,7 +38,7 @@
                 <th>Max</th>
                 <th>Min</th>
             </tr>
-            <tr *ngFor="let weather of dailyWeather()">
+            <tr *ngFor="let weather of (dailyWeather || [])">
                 <td>{{weather.day}}</td>
                 <td><img [src]="'https://ssl.gstatic.com/onebox/weather/48/'+weather.weather+'.png'"
                          [alt]="weather.weather"></td>
@@ -47,14 +47,14 @@
             </tr>
         </table>
     </div>
-    <div class="panel-block" *ngIf="mode === 'hourly'">
+    <div class="panel-block" *ngIf="mode === 'hourly' && (hourlyWeather$ | async) as hourlyWeather">
         <table id="hourly-weather" class="table is-bordered">
             <tr>
                 <th>Time</th>
                 <th>Weather</th>
                 <th>Temperature</th>
             </tr>
-            <tr *ngFor="let weather of hourlyWeather()">
+            <tr *ngFor="let weather of (hourlyWeather || [])">
                 <td>{{weather.time}}</td>
                 <td><img [src]="'https://ssl.gstatic.com/onebox/weather/48/'+weather.weather+'.png'"
                          [alt]="weather.weather" fill></td>
