@@ -1,15 +1,17 @@
 import {TestBed} from '@angular/core/testing';
 
 import {WeatherService} from './weather.service';
-import {HttpClientTestingModule} from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('WeatherService', () => {
   let service: WeatherService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [HttpClientTestingModule],
-    teardown: { destroyAfterEach: false }
+    teardown: { destroyAfterEach: false },
+    imports: [],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
 });
     service = TestBed.inject(WeatherService);
   });
